@@ -1,0 +1,562 @@
+Script started on Sat 13 Oct 2018 01:18:19 AM EDT
+[?1034hbash-4.2$ uname -a
+Linux zeus-1 3.10.0-862.14.4.el7.x86_64 #1 SMP Wed Sep 26 15:12:11 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.2$ ls
+lab6_aveney2_201.c  Lab6Typescript_aveney2_201	Makefile
+bash-4.2$ cat lab6_aveney2_201.c
+/* 
+ * Alexandra Veney G00677630
+ * CS 262, Lab Section 201
+ * Lab 6
+*
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+
+
+#define BYTETOBINARYPATTERN "%d%d%d%d%d%d%d%d"
+
+#define BYTETOBINARY(byte) \
+	(byte & 0x80 ? 1 : 0), \
+	(byte & 0x40 ? 1 : 0), \
+	(byte & 0x20 ? 1 : 0), \
+	(byte & 0x10 ? 1 : 0), \
+	(byte & 0x08 ? 1 : 0), \
+	(byte & 0x04 ? 1 : 0), \
+        (byte & 0x02 ? 1 : 0), \
+        (byte & 0x01 ? 1 : 0)
+
+#define PRINTBIN(x) printf(BYTETOBINARYPATTERN, BYTETOBINARY(x));
+
+#define SIZE 8
+
+void setlsbs(unsigned char *p, unsigned char b0);
+
+unsigned char getlsbs(unsigned char *p);
+
+void displayarray(unsigned char *p);
+
+void displaybyte(unsigned char byte0);
+
+int main (int argc, char* argv[]){
+
+
+	// Initialize byte0 with a random number seeded by 
+	// command line input
+	
+	int seed = 0;
+	
+	seed = atoi(argv[1]);
+	
+	srandom(seed);
+	
+	unsigned char byte0 =  random() % 256;
+
+
+	// Initialize p with random numbers
+	
+	unsigned char p[SIZE];
+
+	for (int i = 0; i < SIZE ; i++){
+
+		p[i] = random() % 256;
+	}	
+
+
+
+	// Display decimal and binary values
+	printf("\n  	 ORIGINAL VALUES	  \n");
+	printf("----------------------------------------\n");
+	displayarray(p);
+	printf("\n");
+	printf("byte0: ");
+	displaybyte(byte0);
+
+	//Set lsbs of p to bits of byte0
+	setlsbs(p, byte0);	
+	
+	// Display array after lsbs changes	
+	printf("\n	ARRAY AFTER SETLSBS	\n");
+	printf("----------------------------------------\n");
+	displayarray(p);
+
+	// Display byte after getting lsbs of p to create new byte
+	printf("\n	BYTEO AFTER GETLSBS	\n");
+	printf("----------------------------------------\n");
+	printf("\n");
+
+	// Display return value of getlsbs and original value
+	printf("Original BYTE0 is: \n\n");
+	displaybyte(byte0);
+	printf("\nNew BYTE0 is: \n\n");
+	displaybyte(getlsbs(p));
+	printf("\n");
+
+	return 0;
+
+}
+
+
+void setlsbs(unsigned char *p, unsigned char b0){
+
+	int arrayBit = 0;
+	int byteBit = 0;
+	int position = 0;
+	
+	for(int i = 0; i < 8; i++){
+		
+		// Get lsb of value at index i
+		arrayBit = (p[i] & 0x01)? 1 : 0;
+	
+		// Get desired bit of byte0
+		position = pow(2,i);
+		byteBit = (b0 & position)? 1 : 0;
+	
+		//only toggle bit if they arent the same
+		if(arrayBit != byteBit){
+		
+			p[i] = (p[i] ^ 0x01);
+		}
+
+	}
+	
+}
+
+
+unsigned char getlsbs(unsigned char *p){
+	
+	unsigned char newbyte0 = 0;
+	int lsb = 0;
+	int mask = 0;
+	
+	for(int i = 0; i < 8; i++){
+		
+		// Get lsb of value at index i
+		lsb = (p[i] & 0x01)? 1 : 0;
+			
+		// Create mask to add one to newbyte0
+		mask = (lsb << i);
+
+		newbyte0 = (newbyte0 | mask);
+	}
+
+	return newbyte0;
+
+
+}
+
+void displayarray(unsigned char *p){
+	// Print values of p in decimal and in binary 
+	for(int j = 0; j < SIZE; j++){
+		printf("p[%d]	Decimal: %3d	Binary: ",j , p[j]);
+		PRINTBIN(p[j]);
+		printf("\n");	
+	}	
+
+
+}
+
+void displaybyte(unsigned char byte0){
+	// Print values of byte0 in decimal and in binary
+	printf("	Decimal: %3d	Binary: ", byte0);
+	PRINTBIN(byte0);	
+	printf("\n");
+
+}
+
+bash-4.2$ cat Makefile
+# A simple Makefile
+# Alexandra Veney G00677630
+# CS 262, Lab Section 201
+# Lab 6
+# The compiler: gcc for C programs, g++ for C++ programs, etc
+
+CC = gcc
+CFLAGS=-g -Wall
+TARGET = lab6_aveney2_201
+all = $(TARGET)
+
+$(TARGET): $(TARGET).c
+	$(CC) $(CFLAGS) -o $(TARGET) $(TARGET).c -lm
+
+
+clean:
+	rm $(TARGET)
+bash-4.2$ make
+gcc -g -Wall -o lab6_aveney2_201 lab6_aveney2_201.c -lm
+bash-4.2$ lab6_aveney2_201 1234
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal: 131	Binary: 10000011
+p[1]	Decimal:  11	Binary: 00001011
+p[2]	Decimal: 115	Binary: 01110011
+p[3]	Decimal: 236	Binary: 11101100
+p[4]	Decimal: 245	Binary: 11110101
+p[5]	Decimal:  75	Binary: 01001011
+p[6]	Decimal:  74	Binary: 01001010
+p[7]	Decimal: 116	Binary: 01110100
+
+byte0: 	Decimal:  14	Binary: 00001110
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal: 130	Binary: 10000010
+p[1]	Decimal:  11	Binary: 00001011
+p[2]	Decimal: 115	Binary: 01110011
+p[3]	Decimal: 237	Binary: 11101101
+p[4]	Decimal: 244	Binary: 11110100
+p[5]	Decimal:  74	Binary: 01001010
+p[6]	Decimal:  74	Binary: 01001010
+p[7]	Decimal: 116	Binary: 01110100
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal:  14	Binary: 00001110
+
+New BYTE0 is: 
+
+	Decimal:  14	Binary: 00001110
+
+bash-4.2$ lab6_aveney2_201 5678
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal: 219	Binary: 11011011
+p[1]	Decimal:  40	Binary: 00101000
+p[2]	Decimal: 119	Binary: 01110111
+p[3]	Decimal:  27	Binary: 00011011
+p[4]	Decimal: 121	Binary: 01111001
+p[5]	Decimal: 253	Binary: 11111101
+p[6]	Decimal: 119	Binary: 01110111
+p[7]	Decimal:  98	Binary: 01100010
+
+byte0: 	Decimal:  16	Binary: 00010000
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal: 218	Binary: 11011010
+p[1]	Decimal:  40	Binary: 00101000
+p[2]	Decimal: 118	Binary: 01110110
+p[3]	Decimal:  26	Binary: 00011010
+p[4]	Decimal: 121	Binary: 01111001
+p[5]	Decimal: 252	Binary: 11111100
+p[6]	Decimal: 118	Binary: 01110110
+p[7]	Decimal:  98	Binary: 01100010
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal:  16	Binary: 00010000
+
+New BYTE0 is: 
+
+	Decimal:  16	Binary: 00010000
+
+bash-4.2$ lab6_aveney2_201 3456[K[K[K[K9876
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal: 137	Binary: 10001001
+p[1]	Decimal: 141	Binary: 10001101
+p[2]	Decimal: 147	Binary: 10010011
+p[3]	Decimal:  18	Binary: 00010010
+p[4]	Decimal: 167	Binary: 10100111
+p[5]	Decimal: 204	Binary: 11001100
+p[6]	Decimal:  32	Binary: 00100000
+p[7]	Decimal:  46	Binary: 00101110
+
+byte0: 	Decimal:  72	Binary: 01001000
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal: 136	Binary: 10001000
+p[1]	Decimal: 140	Binary: 10001100
+p[2]	Decimal: 146	Binary: 10010010
+p[3]	Decimal:  19	Binary: 00010011
+p[4]	Decimal: 166	Binary: 10100110
+p[5]	Decimal: 204	Binary: 11001100
+p[6]	Decimal:  33	Binary: 00100001
+p[7]	Decimal:  46	Binary: 00101110
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal:  72	Binary: 01001000
+
+New BYTE0 is: 
+
+	Decimal:  72	Binary: 01001000
+
+bash-4.2$ lab6_aveney2_201 90
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal: 212	Binary: 11010100
+p[1]	Decimal: 246	Binary: 11110110
+p[2]	Decimal: 124	Binary: 01111100
+p[3]	Decimal: 181	Binary: 10110101
+p[4]	Decimal: 182	Binary: 10110110
+p[5]	Decimal: 181	Binary: 10110101
+p[6]	Decimal:  46	Binary: 00101110
+p[7]	Decimal: 209	Binary: 11010001
+
+byte0: 	Decimal:  11	Binary: 00001011
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal: 213	Binary: 11010101
+p[1]	Decimal: 247	Binary: 11110111
+p[2]	Decimal: 124	Binary: 01111100
+p[3]	Decimal: 181	Binary: 10110101
+p[4]	Decimal: 182	Binary: 10110110
+p[5]	Decimal: 180	Binary: 10110100
+p[6]	Decimal:  46	Binary: 00101110
+p[7]	Decimal: 208	Binary: 11010000
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal:  11	Binary: 00001011
+
+New BYTE0 is: 
+
+	Decimal:  11	Binary: 00001011
+
+bash-4.2$ lab6_aveney2_201 78[K[K56
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal: 102	Binary: 01100110
+p[1]	Decimal: 133	Binary: 10000101
+p[2]	Decimal: 221	Binary: 11011101
+p[3]	Decimal:  40	Binary: 00101000
+p[4]	Decimal:  72	Binary: 01001000
+p[5]	Decimal:  58	Binary: 00111010
+p[6]	Decimal:  73	Binary: 01001001
+p[7]	Decimal: 144	Binary: 10010000
+
+byte0: 	Decimal:  63	Binary: 00111111
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal: 103	Binary: 01100111
+p[1]	Decimal: 133	Binary: 10000101
+p[2]	Decimal: 221	Binary: 11011101
+p[3]	Decimal:  41	Binary: 00101001
+p[4]	Decimal:  73	Binary: 01001001
+p[5]	Decimal:  59	Binary: 00111011
+p[6]	Decimal:  72	Binary: 01001000
+p[7]	Decimal: 144	Binary: 10010000
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal:  63	Binary: 00111111
+
+New BYTE0 is: 
+
+	Decimal:  63	Binary: 00111111
+
+bash-4.2$ lab6_aveney2_201 234
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal:  57	Binary: 00111001
+p[1]	Decimal: 153	Binary: 10011001
+p[2]	Decimal:  68	Binary: 01000100
+p[3]	Decimal: 211	Binary: 11010011
+p[4]	Decimal:  33	Binary: 00100001
+p[5]	Decimal: 179	Binary: 10110011
+p[6]	Decimal:  44	Binary: 00101100
+p[7]	Decimal: 226	Binary: 11100010
+
+byte0: 	Decimal:  43	Binary: 00101011
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal:  57	Binary: 00111001
+p[1]	Decimal: 153	Binary: 10011001
+p[2]	Decimal:  68	Binary: 01000100
+p[3]	Decimal: 211	Binary: 11010011
+p[4]	Decimal:  32	Binary: 00100000
+p[5]	Decimal: 179	Binary: 10110011
+p[6]	Decimal:  44	Binary: 00101100
+p[7]	Decimal: 226	Binary: 11100010
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal:  43	Binary: 00101011
+
+New BYTE0 is: 
+
+	Decimal:  43	Binary: 00101011
+
+bash-4.2$ lab6_aveney2_201 12
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal: 146	Binary: 10010010
+p[1]	Decimal: 178	Binary: 10110010
+p[2]	Decimal: 192	Binary: 11000000
+p[3]	Decimal:  59	Binary: 00111011
+p[4]	Decimal: 247	Binary: 11110111
+p[5]	Decimal: 133	Binary: 10000101
+p[6]	Decimal: 153	Binary: 10011001
+p[7]	Decimal: 129	Binary: 10000001
+
+byte0: 	Decimal: 208	Binary: 11010000
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal: 146	Binary: 10010010
+p[1]	Decimal: 178	Binary: 10110010
+p[2]	Decimal: 192	Binary: 11000000
+p[3]	Decimal:  58	Binary: 00111010
+p[4]	Decimal: 247	Binary: 11110111
+p[5]	Decimal: 132	Binary: 10000100
+p[6]	Decimal: 153	Binary: 10011001
+p[7]	Decimal: 129	Binary: 10000001
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal: 208	Binary: 11010000
+
+New BYTE0 is: 
+
+	Decimal: 208	Binary: 11010000
+
+bash-4.2$ lab6_aveney2_201 309
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal:  20	Binary: 00010100
+p[1]	Decimal: 155	Binary: 10011011
+p[2]	Decimal: 226	Binary: 11100010
+p[3]	Decimal:  92	Binary: 01011100
+p[4]	Decimal:  47	Binary: 00101111
+p[5]	Decimal:  35	Binary: 00100011
+p[6]	Decimal: 183	Binary: 10110111
+p[7]	Decimal: 255	Binary: 11111111
+
+byte0: 	Decimal: 159	Binary: 10011111
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal:  21	Binary: 00010101
+p[1]	Decimal: 155	Binary: 10011011
+p[2]	Decimal: 227	Binary: 11100011
+p[3]	Decimal:  93	Binary: 01011101
+p[4]	Decimal:  47	Binary: 00101111
+p[5]	Decimal:  34	Binary: 00100010
+p[6]	Decimal: 182	Binary: 10110110
+p[7]	Decimal: 255	Binary: 11111111
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal: 159	Binary: 10011111
+
+New BYTE0 is: 
+
+	Decimal: 159	Binary: 10011111
+
+bash-4.2$ lab6_aveney2_201 4
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal:  51	Binary: 00110011
+p[1]	Decimal:  66	Binary: 01000010
+p[2]	Decimal:  30	Binary: 00011110
+p[3]	Decimal: 243	Binary: 11110011
+p[4]	Decimal:  25	Binary: 00011001
+p[5]	Decimal: 153	Binary: 10011001
+p[6]	Decimal:  27	Binary: 00011011
+p[7]	Decimal:  36	Binary: 00100100
+
+byte0: 	Decimal: 221	Binary: 11011101
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal:  51	Binary: 00110011
+p[1]	Decimal:  66	Binary: 01000010
+p[2]	Decimal:  31	Binary: 00011111
+p[3]	Decimal: 243	Binary: 11110011
+p[4]	Decimal:  25	Binary: 00011001
+p[5]	Decimal: 152	Binary: 10011000
+p[6]	Decimal:  27	Binary: 00011011
+p[7]	Decimal:  37	Binary: 00100101
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal: 221	Binary: 11011101
+
+New BYTE0 is: 
+
+	Decimal: 221	Binary: 11011101
+
+bash-4.2$ lab6_aveney2_201 2018
+
+  	 ORIGINAL VALUES	  
+----------------------------------------
+p[0]	Decimal: 159	Binary: 10011111
+p[1]	Decimal:  71	Binary: 01000111
+p[2]	Decimal: 120	Binary: 01111000
+p[3]	Decimal: 149	Binary: 10010101
+p[4]	Decimal: 252	Binary: 11111100
+p[5]	Decimal:  42	Binary: 00101010
+p[6]	Decimal:  94	Binary: 01011110
+p[7]	Decimal: 135	Binary: 10000111
+
+byte0: 	Decimal: 233	Binary: 11101001
+
+	ARRAY AFTER SETLSBS	
+----------------------------------------
+p[0]	Decimal: 159	Binary: 10011111
+p[1]	Decimal:  70	Binary: 01000110
+p[2]	Decimal: 120	Binary: 01111000
+p[3]	Decimal: 149	Binary: 10010101
+p[4]	Decimal: 252	Binary: 11111100
+p[5]	Decimal:  43	Binary: 00101011
+p[6]	Decimal:  95	Binary: 01011111
+p[7]	Decimal: 135	Binary: 10000111
+
+	BYTEO AFTER GETLSBS	
+----------------------------------------
+
+Original BYTE0 is: 
+
+	Decimal: 233	Binary: 11101001
+
+New BYTE0 is: 
+
+	Decimal: 233	Binary: 11101001
+
+bash-4.2$ exit
+
+Script done on Sat 13 Oct 2018 01:24:06 AM EDT

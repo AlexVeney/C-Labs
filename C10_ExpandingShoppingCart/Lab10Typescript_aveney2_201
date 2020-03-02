@@ -1,0 +1,298 @@
+Script started on Sat 10 Nov 2018 11:34:18 PM EST
+[?1034hbash-4.2$ uname -a
+Linux zeus-1 3.10.0-862.14.4.el7.x86_64 #1 SMP Wed Sep 26 15:12:11 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ ls
+lab10_aveney2_201.c  Lab10Typescript_aveney2_201  Makefile
+bash-4.2$ cat lab10_aveney2_201.c 
+/* 
+ * Alexandra Veney G0677630
+ * CS 262, Lab Section 201
+ * Lab 10
+ *
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// Item structure
+typedef struct{
+
+	char name[25];
+	size_t quantity;
+	double price;
+}Item;
+
+
+char menuOptions();
+
+void addItem(Item Cart[], int index);
+
+void printCart(Item Cart[], int numOfItems);
+
+void ResizeArray(Item **Cart, int size);
+
+
+
+int main(int argc, char *argv[]){
+
+	// Get size from user and allocate initial cart size 
+	printf("Please input the number of items-> ");
+	char Buffer[25];
+	fgets(Buffer,24 , stdin);
+	int number;
+	sscanf(Buffer, "%d", &number);
+
+	printf("\nThe number of items you input is %d\n\n", number);
+
+	Item *ShoppingCart;
+	ShoppingCart = (Item*)malloc(sizeof(Item)*number);
+
+	if(ShoppingCart == NULL){
+
+		printf("Malloc failed\n");
+		exit(1);
+	}
+
+
+	char selection;
+	static int counter = 0;
+
+	do{	
+
+		// Prompt user for menu option selection
+		selection = menuOptions();
+
+		// Based on menu option selected perform operations
+		switch(selection){
+			case 'a':
+				// Resize Shopping Cart if full
+				if(counter >= number){
+					ResizeArray(&ShoppingCart, number);
+					number *= 2;
+				}
+
+				// Get Item information from user
+				addItem(ShoppingCart, counter);
+				counter++;
+				break;
+			case 'p':
+				// Print information for cart items
+				printCart(ShoppingCart, counter);
+				break;
+
+			case 'q':
+				printf("Exiting program\n");
+				break;
+			default: 
+				printf("Invalid option\n");
+				break;
+		}
+	}while(selection != 'q');
+
+
+	// Release cart memory
+	free(ShoppingCart);
+
+}
+
+
+
+// Display menu option and get desired selection from user
+char menuOptions(){
+
+	printf("---------------------------------------------------\n");
+	printf("Select option below:\n");
+	printf("a - Add an item to Shopping Cart\n");
+	printf("p - Print items in Shopping Cart\n");
+	printf("q - Quit \n\n");
+	printf("->");
+	char option;
+	char Buffer[20];
+
+	fgets(Buffer, 4, stdin);
+	sscanf(Buffer, "%c", &option);
+
+	printf("\n");
+	return option;
+
+}
+
+// Add item to cart
+void addItem(Item Cart[], int index){
+
+	Item new;
+
+	char Buffer[100];
+
+	printf("Input item  details below\n");
+	printf("Name:");
+	fgets(Buffer, 24, stdin);
+	sscanf(Buffer,"%[^\n]", new.name);
+
+	printf("Quantity:");
+	fgets(Buffer, 24, stdin);
+	sscanf(Buffer,"%lu", &new.quantity);
+
+	printf("Price:");
+	fgets(Buffer, 24, stdin);
+	sscanf(Buffer, "%lf", &new.price );
+
+	Cart[index] = new;
+
+}
+
+// Print information for each item in cart
+void printCart(Item Cart[], int numOfItems){
+
+	for(int i = 0; i < numOfItems; i++){
+		printf("Item #%d:", i+1);
+		printf("| Name: %12s ", Cart[i].name);
+		printf("| Quantity: %4zd ", Cart[i].quantity);
+		printf("| Price: %.2f \n", Cart[i].price);
+
+	}
+
+
+}
+
+// Resize cart to double its size to hold more items
+void ResizeArray(Item **Cart, int size){
+
+	// Allocate new cart memory to hold more items
+	Item *NewCart = (Item*)malloc(sizeof(Item) * (2*size));
+
+	if(NewCart == NULL){
+		printf("Malloc failed\n");
+		exit(1);	
+	}
+
+	NewCart = memcpy(NewCart, *Cart, sizeof(Item)*size);
+
+	// Release old(smaller) cart memory
+	free(*Cart);
+	*Cart = NewCart;
+
+	NewCart = NULL;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bash-4.2$ make
+gcc -g -O0 -Wall -pedantic-errors -o lab10_aveney2_201 lab10_aveney2_201.c 
+bash-4.2$ valgrind --leak-check=yes lab10_aveney2_201
+==25236== Memcheck, a memory error detector
+==25236== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==25236== Using Valgrind-3.12.0 and LibVEX; rerun with -h for copyright info
+==25236== Command: lab10_aveney2_201
+==25236== 
+Please input the number of items-> 2
+
+The number of items you input is 2
+
+---------------------------------------------------
+Select option below:
+a - Add an item to Shopping Cart
+p - Print items in Shopping Cart
+q - Quit 
+
+->a
+
+Input item  details below
+Name:apples
+Quantity:2
+Price:3.99
+---------------------------------------------------
+Select option below:
+a - Add an item to Shopping Cart
+p - Print items in Shopping Cart
+q - Quit 
+
+->a
+
+Input item  details below
+Name:org anges
+Quantity:5
+Price:.99
+---------------------------------------------------
+Select option below:
+a - Add an item to Shopping Cart
+p - Print items in Shopping Cart
+q - Quit 
+
+->grapes      a
+
+Input item  details below
+Name:grapes
+Quantity:16
+Price:.79
+---------------------------------------------------
+Select option below:
+a - Add an item to Shopping Cart
+p - Print items in Shopping Cart
+q - Quit 
+
+->a
+
+Input item  details below
+Name:berries
+Quantity:3
+Price:6.99
+---------------------------------------------------
+Select option below:
+a - Add an item to Shopping Cart
+p - Print items in Shopping Cart
+q - Quit 
+
+->a
+
+Input item  details below
+Name:bananas
+Quantity:3
+Price:. 1.15
+---------------------------------------------------
+Select option below:
+a - Add an item to Shopping Cart
+p - Print items in Shopping Cart
+q - Quit 
+
+->p
+
+Item #1:| Name:       apples | Quantity:    2 | Price: 3.99 
+Item #2:| Name:      oranges | Quantity:    5 | Price: 0.99 
+Item #3:| Name:       grapes | Quantity:   16 | Price: 0.79 
+Item #4:| Name:      berries | Quantity:    3 | Price: 6.99 
+Item #5:| Name:      bananas | Quantity:    3 | Price: 1.15 
+---------------------------------------------------
+Select option below:
+a - Add an item to Shopping Cart
+p - Print items in Shopping Cart
+q - Quit 
+
+->q
+
+Exiting program
+==25236== 
+==25236== HEAP SUMMARY:
+==25236==     in use at exit: 0 bytes in 0 blocks
+==25236==   total heap usage: 3 allocs, 3 frees, 672 bytes allocated
+==25236== 
+==25236== All heap blocks were freed -- no leaks are possible
+==25236== 
+==25236== For counts of detected and suppressed errors, rerun with: -v
+==25236== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+bash-4.2$ exit
+
+Script done on Sat 10 Nov 2018 11:36:33 PM EST

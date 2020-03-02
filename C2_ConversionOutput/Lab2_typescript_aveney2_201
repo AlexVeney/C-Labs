@@ -1,0 +1,154 @@
+Script started on Wed 12 Sep 2018 02:48:19 AM EDT
+[?1034hbash-4.2$ uname -a
+Linux zeus-1 3.10.0-862.9.1.el7.x86_64 #1 SMP Mon Jul 16 16:29:36 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.2$ ls
+lab2_aveney2_201  lab2_aveney2_201.c  Lab2_typescript_aveney2_201  Makefile
+bash-4.2$ cat lab2_aveney2_201.c
+/*
+ * Alexandra Veney G00677630
+ * CS 262, Lab Section 201
+ * Lab 2
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int main(){
+
+	char tempInput[100];
+	int temp;
+	char windInput[100];
+	double wind;
+
+	printf("Enter temperature in degrees (F): \n");
+	fgets(tempInput, 99, stdin);
+
+	sscanf(tempInput, "%d", &temp);
+	
+
+	// Check for invalid temperature above 50 
+	if(temp > 50){
+		printf("Error: A temperature above 50 was entered\n");
+		exit(0);
+	}
+	
+	printf("Enter a value for windspeed (MPH): \n");
+	fgets(windInput, 99,stdin);
+	
+	sscanf(windInput, "%lf", &wind);
+	
+	// Check for invalid windspeed below 3.0
+	if(wind < 3.0){
+		printf("Error: A windspeed below 3.0 was entered\n");
+		exit(0);
+	}
+
+	double windChill;
+
+	// Windspeed raised to a power of (+0.16)
+	double windPow = pow (wind, 0.16);
+
+	windChill = 35.74 + (0.6215 * temp) - (35.75 * windPow) +
+	 (0.4275 * temp * windPow);
+
+
+	printf("Temperature: %d degrees Fahrenheit\n", temp);
+	printf("Wind Speed: %.1f mph\n", wind);
+	printf("Wind Chill Index: %.1lf degrees Fahrenheit\n", windChill);
+
+	return 0;
+
+}
+bash-4.2$ cat Makefile 
+# A simple Makefile
+# Alexandra Veney G00677630
+# CS 262, Lab Section 201
+# Lab 2
+
+CFLAGS=-g -Wall
+
+all: lab2_aveney2_201.c
+	gcc $(CFLAGS) -o lab2_aveney2_201 lab2_aveney2_201.c -lm
+
+clean:
+	rm lab2_aveney2_201
+bash-4.2$ make clean
+rm lab2_aveney2_201
+bash-4.2$ make
+gcc -g -Wall -o lab2_aveney2_201 lab2_aveney2_201.c -lm
+bash-4.2$ ls
+lab2_aveney2_201  lab2_aveney2_201.c  Lab2_typescript_aveney2_201  Makefile
+bash-4.2$ ls[Klab2_aveney2_201 
+Enter temperature in degrees (F): 
+32
+Enter a value for windspeed (MPH): 
+10.0
+Temperature: 32 degrees Fahrenheit
+Wind Speed: 10.0 mph
+Wind Chill Index: 23.7 degrees Fahrenheit
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+32.0
+Enter a value for windspeed (MPH): 
+10
+Temperature: 32 degrees Fahrenheit
+Wind Speed: 10.0 mph
+Wind Chill Index: 23.7 degrees Fahrenheit
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+32.5
+Enter a value for windspeed (MPH): 
+10.0
+Temperature: 32 degrees Fahrenheit
+Wind Speed: 10.0 mph
+Wind Chill Index: 23.7 degrees Fahrenheit
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+-4
+Enter a value for windspeed (MPH): 
+16.4
+Temperature: -4 degrees Fahrenheit
+Wind Speed: 16.4 mph
+Wind Chill Index: -25.4 degrees Fahrenheit
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+55
+Error: A temperature above 50 was entered
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+0.0
+Enter a value for windspeed (MPH): 
+0.0
+Error: A windspeed below 3.0 was entered
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+0.0
+Enter a value for windspeed (MPH): 
+15.9
+Temperature: 0 degrees Fahrenheit
+Wind Speed: 15.9 mph
+Wind Chill Index: -19.9 degrees Fahrenheit
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+-40
+Enter a value for windspeed (MPH): 
+10
+Temperature: -40 degrees Fahrenheit
+Wind Speed: 10.0 mph
+Wind Chill Index: -65.5 degrees Fahrenheit
+bash-4.2$ lab2_aveney2_201 
+Enter temperature in degrees (F): 
+8
+Enter a value for windspeed (MPH): 
+4
+Temperature: 8 degrees Fahrenheit
+Wind Speed: 4.0 mph
+Wind Chill Index: 0.4 degrees Fahrenheit
+bash-4.2$ make clw[Kean
+rm lab2_aveney2_201
+bash-4.2$ ls
+lab2_aveney2_201.c  Lab2_typescript_aveney2_201  Makefile
+bash-4.2$ exit
+
+Script done on Wed 12 Sep 2018 02:51:37 AM EDT
