@@ -1,5 +1,5 @@
-// Alexandra Veney G00677630
-// CS 262, Lab Section 201
+// Alexandra Veney 
+// 
 // Lab 3
 
 #include <stdio.h>

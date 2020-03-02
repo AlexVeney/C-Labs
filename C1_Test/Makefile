@@ -1,6 +1,6 @@
 # A simple Makefile
-# Alexandra Veney G00677630
-# CS 262, Lab Section 201
+# Alexandra Veney
+# 
 # Lab 1
 
 all: lab1_aveney2_201.c

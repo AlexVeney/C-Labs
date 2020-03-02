@@ -1,7 +1,5 @@
 # A simple Makefile
-# Alexandra Veney G00677630
-# CS 262, Lab Section 201
-# Lab 2
+# Alexandra Veney
 
 CFLAGS=-g -Wall
 

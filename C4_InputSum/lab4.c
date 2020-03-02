@@ -1,9 +1,6 @@
 /******************************************************
- *   CS262  Lab 4
+ *   Alexandra Veney
  *  
- *   Name:  Alexandra Veney
- *   Lab Section: 201
- *   
  *   This program calculates the sum of the integers from
  *   0 up to (and including) an integer input by the user
  *******************************************************/

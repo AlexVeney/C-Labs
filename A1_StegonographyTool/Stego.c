@@ -1,6 +1,5 @@
-// Alexandra Veney G00677630
-// CS 262 Lab Section 201
-// Project 2
+// Alexandra Veney
+// Project
 
 
 /*++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*

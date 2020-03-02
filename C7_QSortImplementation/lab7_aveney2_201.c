@@ -1,6 +1,6 @@
 /* 
- * Alexandra Veney G0677630
- * CS 262, Lab Section 201
+ * Alexandra Veney
+ * 
  * Lab 7
  *
  */

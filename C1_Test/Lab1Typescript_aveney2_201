@@ -1,45 +1,0 @@
-Script started on Wed 29 Aug 2018 04:07:03 PM EDT
-[?1034hbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ date
-Wed Aug 29 16:08:25 EDT 2018
-bash-4.2$ uname -a
-Linux zeus-1 3.10.0-862.9.1.el7.x86_64 #1 SMP Mon Jul 16 16:29:36 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
-bash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ pwd
-/home/aveney2/CS262/lab1_aveney2_201
-bash-4.2$ ls
-lab1		  lab1_aveney2_201.c	      Makefile
-lab1_aveney2_201  Lab1Typescript_aveney2_201
-bash-4.2$ cat lab1_aveney2_201.c
-/*
- * Alexandra Veney G00677630
- * CS 262, Lab Section 201
- * Lab 1
- * */
-
-#include <stdio.h>
-#include <stdlib.h>
-
-int main(){
-
-	printf("Hello World!\n");
-	printf("My name is Alexandra Veney.\n");
-	return 0;
-}
-bash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ [Kbash-4.2$ rm lb[Kab1 lab1_aveney2_201
-bash-4.2$ make all
-gcc -g -Wall -o lab1_aveney2_201 lab1_aveney2_201.c
-bash-4.2$ ls
-lab1_aveney2_201    Lab1Typescript_aveney2_201
-lab1_aveney2_201.c  Makefile
-bash-4.2$ lab1_aveney2_201 
-Hello World!
-My name is Alexandra Veney.
-bash-4.2$ gcc -g -Wall -o lab1 lab1_aveney2_201.c
-bash-4.2$ ls
-lab1		  lab1_aveney2_201.c	      Makefile
-lab1_aveney2_201  Lab1Typescript_aveney2_201
-bash-4.2$ lab1
-Hello World!
-My name is Alexandra Veney.
-bash-4.2$ exit
-
-Script done on Wed 29 Aug 2018 04:14:25 PM EDT

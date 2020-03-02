@@ -1,7 +1,6 @@
 # A simple Makefile
-# Alexandra Veney G00677630
-# CS 262, Lab Section 201
-# Project 2 
+# Alexandra Veney
+# 
 # The compiler: gcc for C programs, g++ for C++ programs, etc
 
 CC = gcc
